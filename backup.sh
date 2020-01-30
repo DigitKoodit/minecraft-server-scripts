@@ -3,6 +3,8 @@
 # This script is stolen from here: https://skarlso.github.io/2016/04/16/minecraft-server-aws-s3-backup/
 # We take no credit for creating it.
 
+source ~/survival/.env
+
 if [[ -t 1 ]]; then
     colors=$(tput colors)
     if [[ $colors ]]; then
@@ -24,8 +26,8 @@ fi
 
 backup_bucket=${MINECRAFT_BUCKET}
 backup_limit=${MINECRAFT_ARCHIVE_LIMIT}
-archive_name="${world}-$(date +"%Y-%m-%d").zip"
-zip -r $archive_name world*
+archive_name="world-$(date +"%Y-%m-%d").zip"
+zip -r $archive_name ~/survival/world ~/survival/world_the_end ~/survival/world_nether
 
 printf "Checking if bucket has more than ${RED}${backup_limit}${NC} files already.\n"
 content=( $(aws s3 ls s3://$backup_bucket | awk '{print $4}') )
@@ -45,3 +47,5 @@ if [[ "$state" =~ "upload:" ]]; then
 else
     printf "${RED}Error${NC} occured while uploading archive. Please investigate.\n"
 fi
+
+rm $archive_name

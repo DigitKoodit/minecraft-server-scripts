@@ -24,10 +24,8 @@ fi
 
 backup_bucket=${MINECRAFT_BUCKET}
 backup_limit=${MINECRAFT_ARCHIVE_LIMIT}
-world=$1
-printf "Creating archive of ${RED}${world}${NC}\n"
 archive_name="${world}-$(date +"%H-%M-%S-%m-%d-%Y").zip"
-zip -r $archive_name $world
+zip -r $archive_name world*
 
 printf "Checking if bucket has more than ${RED}${backup_limit}${NC} files already.\n"
 content=( $(aws s3 ls s3://$backup_bucket | awk '{print $4}') )

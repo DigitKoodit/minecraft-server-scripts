@@ -3,7 +3,7 @@ import json
 import os
 
 
-os.chdir('~/survival'')
+os.chdir('~/survival')
 def responseList(version):
     url = 'https://papermc.io/api/v1/paper/' + version
     response = requests.get(url)
@@ -21,10 +21,8 @@ def download():
 
 
 latestMCVersion = responseList('')['versions'][0]
-print(latestMCVersion)
 
 latestPaperVersion = responseList(latestMCVersion)['builds']['latest']
-print(latestPaperVersion)
 
 currentMCVersion = ''
 currentPaperVersion = ''
@@ -32,11 +30,7 @@ with open('serverVersion.json') as versionFile:
     data = json.load(versionFile)
     currentMCVersion = data['MCVersion']
     currentPaperVersion = data['PaperVersion']
-    print(currentMCVersion)
-    print(currentPaperVersion)
 
-if (latestMCVersion != currentMCVersion):
-    download()
-elif (latestPaperVersion != currentPaperVersion):
+if ((latestMCVersion != currentMCVersion) or (latestPaperVersion != currentPaperVersion)):
     download()
 

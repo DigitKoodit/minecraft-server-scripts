@@ -24,7 +24,7 @@ fi
 
 backup_bucket=${MINECRAFT_BUCKET}
 backup_limit=${MINECRAFT_ARCHIVE_LIMIT}
-archive_name="${world}-$(date +"%H-%M-%S-%m-%d-%Y").zip"
+archive_name="${world}-$(date +"%Y-%m-%d").zip"
 zip -r $archive_name world*
 
 printf "Checking if bucket has more than ${RED}${backup_limit}${NC} files already.\n"
